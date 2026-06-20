@@ -1,10 +1,18 @@
 {
-  "description": "Template for authorized NTU RGB+D 60 RGB video archives. Copy this file to ntu60_rgb.json and replace placeholder URLs with official or otherwise authorized download links.",
-  "source": "NTU RGB+D dataset page referenced by the NTU RGB+D paper: http://rose1.ntu.edu.sg/Datasets/actionRecognition.asp",
+  "description": "NTU RGB+D archive manifest. main.py copies this file to ntu60_rgb.json when the default manifest is missing.",
+  "source": "User-provided Google Drive links for NTU60 and the NTU120 supplement.",
   "files": [
     {
-      "name": "nturgbd_rgb_s001.zip",
-      "url": "PUT_AUTHORIZED_DOWNLOAD_URL_HERE",
+      "name": "ntu60_rgb.zip",
+      "gdrive_id": "1CUZnBtYwifVXS21yVg62T-vrPVayso5H",
+      "url": "https://drive.google.com/file/d/1CUZnBtYwifVXS21yVg62T-vrPVayso5H/view",
+      "sha256": "",
+      "extract": true
+    },
+    {
+      "name": "ntu120_rgb_supplement.zip",
+      "gdrive_id": "1tEbuaEqMxAV7dNc4fqu1O4M7mC6CJ50w",
+      "url": "https://drive.google.com/file/d/1tEbuaEqMxAV7dNc4fqu1O4M7mC6CJ50w/view",
       "sha256": "",
       "extract": true
     }
