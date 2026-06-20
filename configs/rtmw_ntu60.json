@@ -1,0 +1,14 @@
+{
+  "data_root": "data/ntu60",
+  "output_root": "outputs/rtmw_ntu60",
+  "pattern": "**/*_rgb.avi",
+  "backend": "onnxruntime",
+  "device": "cpu",
+  "mode": "balanced",
+  "to_openpose": false,
+  "max_persons": 2,
+  "score_threshold": 0.3,
+  "every_n": 1,
+  "skip_existing": true,
+  "summary": "outputs/rtmw_ntu60/index.csv"
+}

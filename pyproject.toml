@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rtmw-ntu60"
+version = "0.1.0"
+description = "RTMW whole-body keypoint extraction for NTU RGB+D 60 RGB videos"
+requires-python = ">=3.9"
+dependencies = [
+  "numpy>=1.23",
+  "opencv-python>=4.8",
+  "onnxruntime>=1.16",
+  "requests>=2.31",
+  "rtmlib>=0.0.13",
+  "tqdm>=4.66",
+  "gdown>=5.2"
+]
+
+[project.optional-dependencies]
+gpu = ["onnxruntime-gpu>=1.16"]
+
+[project.scripts]
+rtmw-ntu60 = "rtmw_ntu60.pipeline:main"
+rtmw-ntu60-extract = "rtmw_ntu60.extract:main"
+rtmw-ntu60-download = "rtmw_ntu60.download:main"
+rtmw-ntu60-train = "rtmw_ntu60.train:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

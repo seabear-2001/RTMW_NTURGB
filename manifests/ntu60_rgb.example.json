@@ -1,0 +1,12 @@
+{
+  "description": "Template for authorized NTU RGB+D 60 RGB video archives. Copy this file to ntu60_rgb.json and replace placeholder URLs with official or otherwise authorized download links.",
+  "source": "NTU RGB+D dataset page referenced by the NTU RGB+D paper: http://rose1.ntu.edu.sg/Datasets/actionRecognition.asp",
+  "files": [
+    {
+      "name": "nturgbd_rgb_s001.zip",
+      "url": "PUT_AUTHORIZED_DOWNLOAD_URL_HERE",
+      "sha256": "",
+      "extract": true
+    }
+  ]
+}

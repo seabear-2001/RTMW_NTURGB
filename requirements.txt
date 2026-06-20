@@ -1,0 +1,7 @@
+numpy>=1.23
+opencv-python>=4.8
+onnxruntime>=1.16
+requests>=2.31
+rtmlib>=0.0.13
+tqdm>=4.66
+gdown>=5.2
