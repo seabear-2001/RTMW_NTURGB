@@ -181,6 +181,11 @@ def build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Download archives but do not unpack them into --data-root.",
     )
+    download.add_argument(
+        "--force-extract",
+        action="store_true",
+        help="Re-extract archives even if they were already extracted.",
+    )
     download.add_argument("--timeout", type=int, default=60)
 
     extract = parser.add_argument_group("rtmw extraction")
@@ -239,7 +244,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--num-classes",
         type=int,
         default=0,
-        help="Class count. Use 0 to infer 60 or 120 from extracted labels.",
+        help="Class count. Use 0 to infer from extracted labels.",
     )
     train.add_argument("--epochs", type=int, default=50)
     train.add_argument("--batch-size", type=int, default=64)
@@ -324,6 +329,7 @@ def run_download(args: argparse.Namespace) -> int:
         overwrite=args.overwrite,
         no_resume=args.no_resume,
         no_extract=args.no_archive_extract,
+        force_extract=args.force_extract,
         timeout=args.timeout,
     )
     return download.run(download_args)

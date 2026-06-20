@@ -1,18 +1,11 @@
 {
-  "description": "NTU RGB+D archive manifest. main.py copies this file to ntu60_rgb.json when the default manifest is missing.",
-  "source": "User-provided Google Drive links for NTU60 and the NTU120 supplement.",
+  "description": "NTU RGB+D 60 archive manifest. main.py copies this file to ntu60_rgb.json when the default manifest is missing.",
+  "source": "User-provided Google Drive link for NTU60. The NTU120 supplement is intentionally disabled by default.",
   "files": [
     {
       "name": "ntu60_rgb.zip",
       "gdrive_id": "1CUZnBtYwifVXS21yVg62T-vrPVayso5H",
       "url": "https://drive.google.com/file/d/1CUZnBtYwifVXS21yVg62T-vrPVayso5H/view",
-      "sha256": "",
-      "extract": true
-    },
-    {
-      "name": "ntu120_rgb_supplement.zip",
-      "gdrive_id": "1tEbuaEqMxAV7dNc4fqu1O4M7mC6CJ50w",
-      "url": "https://drive.google.com/file/d/1tEbuaEqMxAV7dNc4fqu1O4M7mC6CJ50w/view",
       "sha256": "",
       "extract": true
     }

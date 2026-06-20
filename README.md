@@ -79,10 +79,11 @@ $env:NTU60_RGB_URLS="https://your-authorized-url/nturgbd_rgb_s001.zip"
 python main.py
 ```
 
-The default manifest is already shaped for the NTU60 RGB archive and NTU120
-supplement Google Drive links. This downloads archives, extracts them into
-`data\ntu60`, writes RTMW keypoints to `outputs\rtmw_ntu60`, then trains a
-lightweight NumPy softmax classifier and writes:
+The default manifest is already shaped for the NTU60 RGB Google Drive archive.
+The NTU120 supplement is intentionally disabled by default. This downloads the
+NTU60 archive, extracts it into `data\ntu60`, writes RTMW keypoints to
+`outputs\rtmw_ntu60`, then trains a lightweight NumPy softmax classifier and
+writes:
 
 ```text
 outputs\models\ntu60_rtmw_softmax.npz
@@ -97,11 +98,16 @@ python main.py --install-deps --manifest manifests\ntu60_rgb.json
 python main.py --skip-download --limit 2
 python main.py --train-only --epochs 100
 python main.py --skip-train
+python main.py --force-extract
 python main.py --download-only
 ```
 
 `manifests\ntu60_rgb.json` is ignored by git so local download links are not
 committed accidentally.
+
+Archives are not re-extracted on every run. After a successful extraction,
+`main.py` writes a small marker under `data\ntu60\.extract_markers`; later runs
+reuse the extracted data unless the archive changes or you pass `--force-extract`.
 
 ## Run on Existing NTU60 RGB Videos
 
@@ -178,6 +184,9 @@ Supported entries:
 Archive extraction supports `.zip`, `.tar`, `.tar.gz`, `.tgz`, `.7z`, and `.rar`.
 For `.7z` or `.rar`, install `7z` and make sure it is on `PATH`.
 
+The NTU120 supplement link can be added back later by adding another manifest
+entry with Google Drive file id `1tEbuaEqMxAV7dNc4fqu1O4M7mC6CJ50w`.
+
 ## Useful Options
 
 ```powershell
@@ -199,7 +208,7 @@ Common training options:
 
 - `--epochs 50`: number of lightweight classifier epochs.
 - `--train-split xsub|xview|random|all`: split used for training metrics.
-- `--num-classes 0`: infer 60 or 120 classes from extracted labels.
+- `--num-classes 0`: infer the class count from extracted labels.
 - `--train-only`: train from existing `.npz` keypoint files.
 - `--skip-train`: run download/extraction without training.
 

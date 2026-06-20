@@ -45,7 +45,7 @@ def build_parser() -> argparse.ArgumentParser:
         "--num-classes",
         type=int,
         default=DEFAULTS["num_classes"],
-        help="Class count. Use 0 to infer 60/120-style count from labels.",
+        help="Class count. Use 0 to infer from labels.",
     )
     parser.add_argument("--epochs", type=int, default=DEFAULTS["epochs"])
     parser.add_argument("--batch-size", type=int, default=DEFAULTS["batch_size"])

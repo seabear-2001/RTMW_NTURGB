@@ -266,6 +266,48 @@ def extract_archive(path: Path, destination: Path) -> None:
         print(f"Skipping extraction for unsupported archive type: {path}")
 
 
+def archive_signature(path: Path) -> dict[str, Any]:
+    stat = path.stat()
+    return {
+        "archive_name": path.name,
+        "archive_size": stat.st_size,
+        "archive_mtime_ns": stat.st_mtime_ns,
+    }
+
+
+def extract_marker_path(path: Path, destination: Path) -> Path:
+    safe_name = re.sub(r"[^A-Za-z0-9_.-]", "_", path.name)
+    return destination / ".extract_markers" / f"{safe_name}.json"
+
+
+def is_extract_current(path: Path, destination: Path) -> bool:
+    marker = extract_marker_path(path, destination)
+    if not marker.exists():
+        return False
+    try:
+        marker_data = json.loads(marker.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return False
+    return marker_data == archive_signature(path)
+
+
+def mark_extracted(path: Path, destination: Path) -> None:
+    marker = extract_marker_path(path, destination)
+    marker.parent.mkdir(parents=True, exist_ok=True)
+    marker.write_text(
+        json.dumps(archive_signature(path), indent=2),
+        encoding="utf-8",
+    )
+
+
+def extract_archive_once(path: Path, destination: Path, force: bool = False) -> None:
+    if not force and is_extract_current(path, destination):
+        print(f"Already extracted: {path} -> {destination}")
+        return
+    extract_archive(path, destination)
+    mark_extracted(path, destination)
+
+
 def should_extract(entry: dict[str, Any], args: argparse.Namespace) -> bool:
     if args.no_extract:
         return False
@@ -312,6 +354,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--no-resume", action="store_true")
     parser.add_argument("--no-extract", action="store_true")
+    parser.add_argument(
+        "--force-extract",
+        action="store_true",
+        help="Extract archives even when the extraction marker is current.",
+    )
     parser.add_argument("--timeout", type=int, default=60)
     return parser
 
@@ -327,7 +374,11 @@ def run(args: argparse.Namespace) -> int:
         print(f"[{index}/{len(entries)}] {target_name(entry)}")
         archive_path = download_entry(entry, args)
         if should_extract(entry, args):
-            extract_archive(archive_path, Path(args.extract_dir))
+            extract_archive_once(
+                archive_path,
+                Path(args.extract_dir),
+                force=bool(getattr(args, "force_extract", False)),
+            )
 
     return 0
 
